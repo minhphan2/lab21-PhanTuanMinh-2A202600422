@@ -77,6 +77,8 @@ jobs:
         run: dvc pull data/train_phase1.csv.dvc data/eval.csv.dvc
 
       - name: Train model
+        env:
+          MLFLOW_TRACKING_URI: sqlite:///mlflow.db
         run: python src/train.py
 
       - name: Read metrics
