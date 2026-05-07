@@ -64,7 +64,7 @@ jobs:
         env:
           CREDENTIALS: ${{ secrets.CLOUD_CREDENTIALS }}
         run: |
-          echo "$CREDENTIALS" > /tmp/sa-key.json
+          python3 -c "import os; open('/tmp/sa-key.json','w').write(os.environ['CREDENTIALS'])"
           echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/sa-key.json" >> $GITHUB_ENV
 
       - name: Pull data with DVC
