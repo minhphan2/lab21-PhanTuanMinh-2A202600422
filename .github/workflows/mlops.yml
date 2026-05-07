@@ -67,7 +67,9 @@ jobs:
 
       - name: Pull data with DVC
         # TODO 3: Pull du lieu tu cloud storage bang DVC
-        run: dvc pull data/train_phase1.csv.dvc data/eval.csv.dvc
+        run: |
+          dvc remote modify myremote credentialpath /tmp/sa-key.json
+          dvc pull data/train_phase1.csv.dvc data/eval.csv.dvc
 
       - name: Train model
         run: python src/train.py
