@@ -60,21 +60,13 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Authenticate to Cloud Storage
-        # TODO 2: Ghi noi dung credentials ra file tam va set bien moi truong xac thuc.
-        env:
-          CREDENTIALS: ${{ secrets.CLOUD_CREDENTIALS }}
-        run: |
-          echo "Credentials length: ${#CREDENTIALS}"
-          python3 -c "import os; open('/tmp/sa-key.json','w').write(os.environ['CREDENTIALS'])"
-          echo "File size: $(wc -c < /tmp/sa-key.json)"
-          python3 -c "import json; json.load(open('/tmp/sa-key.json')); print('JSON valid')"
-          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/sa-key.json" >> $GITHUB_ENV
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.CLOUD_CREDENTIALS }}'
 
       - name: Pull data with DVC
         # TODO 3: Pull du lieu tu cloud storage bang DVC
-        run: |
-          dvc remote modify myremote credentialpath /tmp/sa-key.json
-          dvc pull data/train_phase1.csv.dvc data/eval.csv.dvc
+        run: dvc pull data/train_phase1.csv.dvc data/eval.csv.dvc
 
       - name: Train model
         run: python src/train.py
