@@ -46,6 +46,7 @@ jobs:
     name: Train
     needs: test
     runs-on: ubuntu-latest
+    environment: production
     outputs:
       accuracy: ${{ steps.read_metrics.outputs.accuracy }}
 
@@ -137,6 +138,7 @@ jobs:
     name: Deploy
     needs: eval
     runs-on: ubuntu-latest
+    environment: production
     steps:
 
       - name: SSH deploy to VM
