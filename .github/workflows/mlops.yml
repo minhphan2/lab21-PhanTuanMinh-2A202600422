@@ -59,6 +59,13 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Debug Secrets Context
+        run: |
+          echo "Checking if secrets exist..."
+          echo "Has CLOUD_BUCKET: ${{ secrets.CLOUD_BUCKET != '' }}"
+          echo "Has CLOUD_CREDENTIALS: ${{ secrets.CLOUD_CREDENTIALS != '' }}"
+          echo "Has VM_HOST: ${{ secrets.VM_HOST != '' }}"
+
       - name: Authenticate to Cloud Storage
         uses: google-github-actions/auth@v2
         with:
