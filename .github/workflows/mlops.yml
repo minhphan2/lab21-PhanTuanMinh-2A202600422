@@ -32,6 +32,8 @@ jobs:
 
       - name: Run unit tests
         # TODO 1: Viet lenh de chay pytest tren thu muc tests/ voi co -v
+        env:
+          MLFLOW_TRACKING_URI: sqlite:///test_mlflow.db
         run: pytest tests/ -v
 
 
