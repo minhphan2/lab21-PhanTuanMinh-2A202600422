@@ -61,8 +61,10 @@ jobs:
 
       - name: Authenticate to Cloud Storage
         # TODO 2: Ghi noi dung credentials ra file tam va set bien moi truong xac thuc.
+        env:
+          CREDENTIALS: ${{ secrets.CLOUD_CREDENTIALS }}
         run: |
-          echo '${{ secrets.CLOUD_CREDENTIALS }}' > /tmp/sa-key.json
+          echo "$CREDENTIALS" > /tmp/sa-key.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/sa-key.json" >> $GITHUB_ENV
 
       - name: Pull data with DVC
